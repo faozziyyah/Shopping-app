@@ -1,0 +1,32 @@
+{% extends 'firstapp/base.html' %}
+
+{% block content %}
+   
+    <h1 style="text-align:center; margin-top: 1em;">List of Venues</h1> 
+    <a href="{% url 'venue-text' %}" class="btn btn-outline-secondary btn-sm"> Venue Text File </a>
+    <a href="{% url 'venue-csv' %}" class="btn btn-outline-secondary btn-sm"> Venue CSV File </a>
+    <a href="{% url 'venue-pdf' %}" class="btn btn-outline-secondary btn-sm"> Venue PDF File </a>
+
+    {% for venue in venue_list %}
+    <section class="card">
+
+        <div class="card-header">
+            <strong><a href="{% url 'show-venue' venue.id %}">{{ venue }}</a></strong>
+        </div>
+
+        <div class="card-body">            
+
+            <p class="card-text">
+                <b>Web Address</b> <a href="{{ venue.web}}">{{ venue.web }}</a> <br />
+                <b>Address:</b> {{ venue.address }} <br />
+                <b>Email Address:</b> <a href="{{ venue.email_address}}">{{ venue.email_address }}</a> <br />
+            </p>
+
+            <a href="{% url 'show-venue' venue.id %}" class="btn btn-outline-secondary btn-sm"> Check Venue </a>
+
+        </div>
+
+    </section> <br />
+    {% endfor %}
+
+{% endblock %}

@@ -1,0 +1,24 @@
+{% extends 'firstapp/base.html' %}
+
+{% block content %}
+   
+    <h1 style="text-align:center; margin-top: 1em;">Add Event </h1> <br />
+
+    {% if submitted %}
+        
+        Your Event was submitted successfully!!!
+
+    {% else %}
+
+        <form action="" method="POST">
+            {% csrf_token %}
+    
+            {{ form.as_p }}
+    
+            <input type="submit" value="Add Event" class="btn btn-primary" style="margin-bottom: 5em;" />
+    
+        </form>
+
+    {% endif %}
+
+{% endblock %}

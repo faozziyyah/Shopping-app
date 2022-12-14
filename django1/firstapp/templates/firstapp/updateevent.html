@@ -1,0 +1,13 @@
+{% extends 'firstapp/base.html' %}
+
+{% block content %}
+
+    <h1>Update Event...</h1> <br />
+
+    <form action="" method="POST">
+        {% csrf_token %} 
+        {{ form.as_p }} <br />
+        <input type="submit" value="Update Event" class="btn btn-primary" style="margin-bottom: 5em;" />
+    </form>
+
+{% endblock %}

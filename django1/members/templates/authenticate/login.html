@@ -1,0 +1,24 @@
+{% extends 'firstapp/base.html' %}
+
+{% block content %}
+
+    <h1 style="text-align:center; margin-top: 1em;"> Login </h1>
+
+        <form action="" method="POST">
+            {% csrf_token %}
+    
+            <div class="mb-3">
+                <label for="username" class="form-label">Username</label>
+                <input type="text" name="username" class="form-control" id="username" />
+            </div>
+
+            <div class="mb-3">
+                <label for="password" class="form-label">Password</label>
+                <input type="password" name="password" class="form-control" id="password" />
+            </div>
+    
+            <input type="submit" value="Login" class="btn btn-primary" style="margin-bottom: 5em;" />
+    
+        </form>
+
+{% endblock %}
