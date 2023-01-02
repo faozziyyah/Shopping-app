@@ -17,6 +17,7 @@
                 <b>Email Address:</b> <a href="{{ venue.email_address}}">{{ venue.email_address }}</a> <br />
                 <b>Phone:</b> {{ venue.phone }} <br />
                 <b>Zip-code:</b> {{ venue.zip_code }} <br />
+                <b>Venue Owner:</b> {{ venue_owner }} - {{ venue_owner.email }} <br />
             </p>
 
             <a href="{% url 'update-venue' venue.id %}" class="btn btn-warning btn-sm"> Update Venue </a>

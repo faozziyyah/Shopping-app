@@ -1,12 +1,14 @@
 {% extends 'firstapp/base.html' %}
 
 {% block content %}
+
+{% if user.is_authenticated %}
    
-    <h1 style="text-align:center; margin-top: 1em;">Add Venue </h1> <br />
+    <h1 style="text-align:center;">Add Venue </h1> <br />
 
     {% if submitted %}
-        
-        Your Venue was submitted successfully!!!
+
+    <h1 style="text-align:center;"> Your Venue was submitted successfully!!! </h1>
 
     {% else %}
 
@@ -20,5 +22,13 @@
         </form>
 
     {% endif %}
+
+{% else %}
+
+    <h1 style="text-align:center; margin-top: 1em; color: red;">Sorry! You Must Be Logged In To View This Page! </h1>
+    
+    <a class="nav-link" style="text-align:center; margin-top: 1em;" aria-current="page" href="{% url 'login' %}">Login Here...</a>
+
+{% endif %}
 
 {% endblock %}

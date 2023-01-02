@@ -3,9 +3,6 @@
 {% block content %}
    
     <h1 style="text-align:center; margin-top: 1em;">List of Venues</h1> 
-    <a href="{% url 'venue-text' %}" class="btn btn-outline-secondary btn-sm"> Venue Text File </a>
-    <a href="{% url 'venue-csv' %}" class="btn btn-outline-secondary btn-sm"> Venue CSV File </a>
-    <a href="{% url 'venue-pdf' %}" class="btn btn-outline-secondary btn-sm"> Venue PDF File </a>
 
     {% for venue in venue_list %}
     <section class="card">

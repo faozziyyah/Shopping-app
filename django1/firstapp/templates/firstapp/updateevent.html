@@ -2,12 +2,30 @@
 
 {% block content %}
 
-    <h1>Update Event...</h1> <br />
+{% if user.is_authenticated %}
+    {% if user == event.manager %}
 
-    <form action="" method="POST">
-        {% csrf_token %} 
-        {{ form.as_p }} <br />
-        <input type="submit" value="Update Event" class="btn btn-primary" style="margin-bottom: 5em;" />
-    </form>
+        <h1>Update Event...</h1> <br />
+    
+        <form action="" method="POST">
+            {% csrf_token %} 
+            {{ form.as_p }} <br />
+            <input type="submit" value="Update Event" class="btn btn-primary" style="margin-bottom: 5em;" />
+        </form>
+
+    {% else %}
+    
+        <h1 style="text-align:center; margin-top: 1em; color: red;">Access Denied! </h1>
+        <h1 style="text-align:center; margin-top: 1em; color: red; font-style: italic;">Only The Event Manager Can Update This Event </h1>
+    
+    {% endif %}
+
+{% else %}
+
+    <h1 style="text-align:center; margin-top: 1em; color: red;">Sorry! You Must Be Logged In To View This Page! </h1>
+    
+    <a class="nav-link" style="text-align:center; margin-top: 1em;" aria-current="page" href="{% url 'login' %}">Login Here...</a>
+
+{% endif %}
 
 {% endblock %}
