@@ -1,0 +1,41 @@
+{% extends 'firstapp/base.html' %}
+
+{% block content %}
+  
+  <h2 style="margin-top: 1em;">My Events...</h2>
+  
+  {% for event in events %}
+
+    <section class="card">
+  
+      <div class="card-header">
+          <strong>{{ event }}</strong>
+      </div>
+  
+      <div class="card-body">
+  
+          <h5 class="card-title"><b>Venue:</b> {{ event.venue }}</h5>
+  
+          <p class="card-text">
+              <b>Date:</b> {{ event.event_date }} <br />
+              <b>Venue Website:</b> <a href="{{ event.venue.web}}">{{ event.venue.web }}</a> <br />
+              <b>Manager:</b> {{ event.manager }} <br />
+              <b>Description:</b> {{ event.description }} <br />
+              <b>Attendees:</b> <br /> 
+                  {% for user in event.attendees.all %}
+                      {{ user }} <br />
+                  {% endfor %}
+          </p>
+  
+      </div>
+  
+      <div class="card-footer text-muted">
+         <a href="{% url 'update-event' event.id %}" class="btn btn-warning btn-sm"> Update Event </a>
+         <a href="{% url 'delete-event' event.id %}" class="btn btn-danger btn-sm"> Delete Event </a>
+      </div>
+  
+    </section> <br />
+
+  {% endfor %}
+
+{% endblock %}

@@ -1,0 +1,31 @@
+{% extends 'firstapp/base.html' %}
+
+{% block content %}
+
+    <form style="margin-top: 1em;" method="POST" action="{% url 'search-events' %}">
+        {% csrf_token %}
+    
+        <input class="form-control me-2" type="search" placeholder="Search events..." aria-label="Search" name="searched" />
+        <br />
+        <button class="btn btn-primary" type="submit">Search</button>
+    </form>
+
+    {% if searched %}
+
+        <h1 style="text-align: center; margin-top: 1em;">You searched for {{ searched }}</h1> <br /> 
+
+        <table class="table table-hover table-striped table-bordered">
+            {% for event in events %}
+                <tr>
+                    <td> {{ event }} - {{ event.venue }}</td>
+                </tr>
+            {% endfor %}
+        </table>
+
+    {% else %}
+
+        <h1 style="color: red; text-align: center; margin-top: 1em;">You Forgot To Search For An Event!!!</h1>
+
+    {% endif %}
+
+{% endblock %}

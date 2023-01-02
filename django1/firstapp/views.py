@@ -13,6 +13,16 @@ from reportlab.pdfgen import canvas
 from reportlab.lib.units import inch
 from reportlab.lib.pagesizes import letter
 
+# create my events page
+def my_events(request):
+    if request.user.is_authenticated:
+        me = request.user.id
+        events = Event.objects.filter(attendees=me)
+        return render(request, 'firstapp/myevents.html', {"events": events})
+    else:
+        messages.success(request, ("You Aren't Authorized To View This Page!"))
+        return redirect('index')
+
 # generate PDF file venue list
 def venue_pdf(request):
     buf = io.BytesIO()
@@ -90,7 +100,7 @@ def show_venue(request, venue_id):
 def add_venue(request):
     submitted = False
     if request.method == 'POST':
-        form = VenueForm(request.POST)
+        form = VenueForm(request.POST, request.FILES)
         if form.is_valid():
             venue = form.save(commit=False)
             venue.owner = request.user.id
@@ -106,7 +116,7 @@ def add_venue(request):
 
 def update_venue(request, venue_id):
     venue = Venue.objects.get(pk=venue_id)
-    form = VenueForm(request.POST or None, instance=venue)
+    form = VenueForm(request.POST or None, request.FILES or None, instance=venue)
     if form.is_valid():
         form.save()
         return redirect('list-venues')
@@ -127,6 +137,15 @@ def search_venues(request):
         return render(request, 'firstapp/searchvenues.html', {'searched': searched, 'venues': venues})
     else:
         return render(request, 'firstapp/searchvenues.html', {})
+
+def search_events(request):
+    if request.method == 'POST':
+        searched = request.POST['searched']
+        events = Event.objects.filter(name__contains=searched)
+
+        return render(request, 'firstapp/searchevents.html', {'searched': searched, 'events': events})
+    else:
+        return render(request, 'firstapp/searchevents.html', {})
 
 def add_event(request):
     submitted = False
@@ -194,4 +213,9 @@ def index(request, year=datetime.now().year, month=datetime.now().strftime('%B')
     #get current time
     time = now.strftime('%Y-%m-%d-%I:%M %p')
 
-    return render(request, 'firstapp/index.html', {"year": year, "month": month, "month_number": month_number, "cal": cal, "current_year": current_year, "time": time,})
+    event_list = Event.objects.filter(
+        event_date__year = year,
+        event_date__month = month_number 
+    )
+
+    return render(request, 'firstapp/index.html', {"year": year, "month": month, "month_number": month_number, "cal": cal, "current_year": current_year, "time": time, "event_list": event_list,})

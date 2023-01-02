@@ -44,7 +44,15 @@
 
                     <li><a class="dropdown-item" aria-current="page" href="{% url 'events' %}">All Events</a></li>
 
-                    <li><a class="dropdown-item" aria-current="page" href="{% url 'add-event' %}">Add Event</a></li>
+                    <li><a class="dropdown-item" aria-current="page" href="{% url 'search-events' %}">Search Events</a></li>
+
+                    {% if user.is_authenticated %}
+
+                      <li><a class="dropdown-item" aria-current="page" href="{% url 'add-event' %}">Add Event</a></li>
+
+                      <li><a class="dropdown-item" aria-current="page" href="{% url 'my-events' %}">My Events</a></li>
+
+                    {% endif %}
 
                   </ul>
 
@@ -58,7 +66,11 @@
 
                     <li><a class="dropdown-item" aria-current="page" href="{% url 'list-venues' %}">All Venues</a></li>
 
-                    <li><a class="dropdown-item" aria-current="page" href="{% url 'add-venue' %}">Add Venue</a></li>
+                    {% if user.is_authenticated %}
+
+                      <li><a class="dropdown-item" aria-current="page" href="{% url 'add-venue' %}">Add Venue</a></li>
+
+                    {% endif %}
 
                   </ul>
 
@@ -85,6 +97,7 @@
               <ul class="navbar-nav  navbar-right">
 
                 {% if user.is_authenticated %}
+
                     <li class="nav-item">
                       <a class="nav-link" aria-current="page" href="{% url 'logout' %}">Logout</a>
                     </li>

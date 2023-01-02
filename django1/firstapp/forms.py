@@ -7,7 +7,7 @@ class VenueForm(ModelForm):
     class Meta:
         model = Venue
         #fields = "__all__"
-        fields = ('name', 'address', 'zip_code', 'phone', 'web', 'email_address', 'capacity')
+        fields = ('name', 'address', 'zip_code', 'phone', 'web', 'email_address', 'capacity', 'venue_image')
         labels = {
             'name': '',
             'address': '',
@@ -15,7 +15,8 @@ class VenueForm(ModelForm):
             'phone': '',
             'web': '',
             'email_address': '',
-            'capacity': ''
+            'capacity': '',
+            'venue_image': '',
         }
         widgets = {
             'name': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Venue Name'}),

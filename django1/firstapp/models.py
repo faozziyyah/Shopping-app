@@ -11,6 +11,7 @@ class Venue(models.Model):
     email_address = models.EmailField('Email Address')
     capacity = models.CharField('Capacity', max_length=15, blank=False)
     owner = models.IntegerField('Venue Owner', blank=False, default=1)
+    venue_image = models.ImageField(null=True, blank=True, upload_to="images/")
 
     def __str__(self):
         return self.name
