@@ -6,7 +6,7 @@
   
   {% for event in events %}
 
-    <section class="card">
+    <section class="card" style="background-color: #343252; color: #fff; box-shadow: 7px 5px 5px #504c8d;">
   
       <div class="card-header">
           <strong>{{ event }}</strong>
@@ -18,7 +18,7 @@
   
           <p class="card-text">
               <b>Date:</b> {{ event.event_date }} <br />
-              <b>Venue Website:</b> <a href="{{ event.venue.web}}">{{ event.venue.web }}</a> <br />
+              <b>Venue Website:</b> <a <a style="color: white;" href="{{ event.venue.web}}">{{ event.venue.web }}</a> <br />
               <b>Manager:</b> {{ event.manager }} <br />
               <b>Description:</b> {{ event.description }} <br />
               <b>Attendees:</b> <br /> 

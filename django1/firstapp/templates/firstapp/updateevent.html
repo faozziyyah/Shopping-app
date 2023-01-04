@@ -2,7 +2,8 @@
 
 {% block content %}
 
-{% if user.is_authenticated %}
+    <div id="uevent">
+    {% if user.is_authenticated %}
     {% if user == event.manager %}
 
         <h1>Update Event...</h1> <br />
@@ -20,12 +21,14 @@
     
     {% endif %}
 
-{% else %}
+    {% else %}
 
-    <h1 style="text-align:center; margin-top: 1em; color: red;">Sorry! You Must Be Logged In To View This Page! </h1>
-    
-    <a class="nav-link" style="text-align:center; margin-top: 1em;" aria-current="page" href="{% url 'login' %}">Login Here...</a>
+        <h1 style="text-align:center; margin-top: 1em; color: red;">Sorry! You Must Be Logged In To View This Page! </h1>
+        
+        <a class="nav-link" style="text-align:center; margin-top: 1em;" aria-current="page" href="{% url 'login' %}">Login Here...</a>
 
-{% endif %}
+    {% endif %}
+
+    </div>
 
 {% endblock %}

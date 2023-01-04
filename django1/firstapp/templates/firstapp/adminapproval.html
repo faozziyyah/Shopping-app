@@ -1,0 +1,92 @@
+{% extends 'firstapp/base.html' %}
+
+{% block content %}
+   
+    <h1 style="text-align:center; margin-top: 1em;">Admin Dashboard</h1>
+
+    <form class="container-fluid" action="" method="POST">
+        {% csrf_token %}
+
+        <section class="row">
+
+            <article class="card col-sm-6" style="background-color: #343252; color: #fff; box-shadow: 7px 5px 5px #504c8d;">
+
+                <div class="card-header">
+                    <strong> Venue List... </strong>
+                </div> <br />
+
+                <table class="table table-bordered" style="color: #fff;">
+
+                    {% for venue in venue_list %}
+                        <tr>
+                            <td> <strong>{{ venue }}</strong> </td>
+                            <td style="text-align:center;"> 
+                                <a href="{% url 'show-venue' venue.id %}" class="btn btn-success btn-sm"> Check Venue </a>
+                            </td>
+                        </tr>
+                    {% endfor %}
+            
+                </table>
+
+            </article>
+
+            <aside class="card col-sm-3 offset-sm-3" style="background-color: #343252; color: #fff; box-shadow: 7px 5px 5px #504c8d;">
+  
+                <div class="card-header">
+                    <strong> Statistics... </strong>
+                </div>
+            
+                <div class="card-body">
+            
+                    <p class="card-text"><b>Event Count:</b> {{ event_count }} Events</p>
+                    <p class="card-text"><b>Venue Count:</b> {{ venue_count }} Venues</p>
+                    <p class="card-text"><b>User Count:</b> {{ user_count }} Users</p>
+            
+                </div>
+            
+            </aside>
+
+        </section> <br /> <br />
+
+        <div class="card container-fluid" style="margin-bottom: 2em; background-color: #343252; color: #fff; box-shadow: 7px 5px 5px #504c8d;">
+
+            <div class="row card-header">
+                <strong class="col-sm-3"> Event Approval Form </strong>
+                <button class="btn btn-warning btn-sm col-sm-2 offset-sm-6" type="submit">Update Approval</button>
+            </div> <br />
+
+            <table style="color: #fff;" class="table table-bordered">
+
+                <thead>
+                    <tr>
+                        <th scope=""> <strong>Event Name</strong> </th>
+                        <th scope=""> <strong>Approved</strong> </th>
+                    </tr>
+                </thead>
+        
+                <tbody>
+                    {% for event in event_list %}
+                        <tr>
+                            <td> <strong>{{ event }}</strong> </td>
+                            <td> 
+                                {% if event.approved %}
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="checkbox" checked="checked" value="{{ event.id}}" name="boxes" />
+                                    </div>
+                                {% else %}
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="checkbox" value="{{ event.id}}" name="boxes" />
+                                    </div>
+                                {% endif %}
+                            </td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+        
+            </table> 
+
+        </div>
+
+    </form>
+
+{% endblock %}

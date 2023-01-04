@@ -3,20 +3,33 @@
 {% block content %}
    
     <h1 style="text-align:center; margin-top: 1em;">List of Events</h1>
-    {% for event in event_list %}
-    <section class="card">
+    {% for event in events %}
+    {% if event.approved %}
+    <section class="container card" style="background-color: #343252; color: #fff; box-shadow: 7px 5px 5px #504c8d;">
 
-        <div class="card-header">
-            <strong>{{ event }}</strong>
+        <div class="row card-header">
+
+            <div class="col-sm-3">
+                <strong>{{ event }}</strong>
+            </div>
+
+            <div class="col-sm-3 offset-sm-6">
+                <strong>Approved: {{ event.approved }}</strong>
+            </div>
+
         </div>
 
-        <div class="card-body">
+        <div class="row card-body">
 
-            <h5 class="card-title">Venue: {{ event.venue }}</h5>
+            <h5 class="row card-title" style="display: flex; justify-content: center; text-align:center">Venue: {{ event.venue }}</h5>
 
-            <p class="card-text">
+            <p class="col-sm-4 card-text">
                 <b>Date:</b> {{ event.event_date }} <br />
-                <b>Venue Website:</b> <a href="{{ event.venue.web}}">{{ event.venue.web }}</a> <br />
+                <b>Days till Event:</b> {{ event.Days_till }} <br />
+                <b>Occurred:</b> {{ event.is_past }} <br />
+                <b>Venue Website:</b> <a style="color: white;" href="{{ event.venue.web}}">{{ event.venue.web }}</a> <br />
+            </p>
+            <p class="col-sm-4 offset-sm-4 card-text">
                 <b>Manager:</b> {{ event.manager }} <br />
                 <b>Description:</b> {{ event.description }} <br />
                 <b>Attendees:</b> <br /> 
@@ -27,12 +40,37 @@
 
         </div>
 
-        <div class="card-footer text-muted">
+        <div class="card-footer text-muted"  style="background-color: lightblue;">
            <a href="{% url 'update-event' event.id %}" class="btn btn-warning btn-sm"> Update Event </a>
            <a href="{% url 'delete-event' event.id %}" class="btn btn-danger btn-sm"> Delete Event </a>
         </div>
 
     </section> <br />
+    {% endif %}
     {% endfor %}
+
+    <nav aria-label="Page-navigation example">
+        <ul class="pagination justify-content-center">
+
+            {% if events.has_previous %}
+    
+                <li class="page-item"> <a class="page-link" href="?page=1">&laquo; First</a> </li>
+                <li class="page-item"> <a class="page-link" href="?page={{ events.previous_page_number }}">Previous</a> </li>
+    
+            {% endif %}
+
+            {% for i in nums %}
+                <li class="page-item"> <a class="page-link" href="?page={{ forloop.counter }}">{{ forloop.counter }}</a> </li>
+            {% endfor %}
+        
+            {% if events.has_next %}
+        
+                <li class="page-item"> <a class="page-link" href="?page={{ events.next_page_number }}">Next</a> </li>
+                <li class="page-item"> <a class="page-link" href="?page={{ events.paginator.num_pages }}">Last &raquo;</a> </li>
+        
+            {% endif %}
+
+        </ul>
+    </nav>
 
 {% endblock %}

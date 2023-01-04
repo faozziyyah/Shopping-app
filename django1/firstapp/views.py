@@ -12,6 +12,7 @@ import io
 from reportlab.pdfgen import canvas
 from reportlab.lib.units import inch
 from reportlab.lib.pagesizes import letter
+from django.core.paginator import Paginator
 
 # create my events page
 def my_events(request):
@@ -83,19 +84,63 @@ def venue_csv(request):
 
     return response
 
+# admin approval page
+def admin_approval(request):
+    event_count = Event.objects.all().count()
+    venue_count = Venue.objects.all().count()
+    user_count = User.objects.all().count()
+
+    event_list = Event.objects.all().order_by('-event_date')
+    venue_list = Venue.objects.all().order_by('name')
+    if request.user.is_superuser:
+
+        if request.method == 'POST':
+            id_list = request.POST.getlist('boxes')
+
+            #uncheck all events
+            event_list.update(approved=False)
+
+            for x in id_list:
+                Event.objects.filter(pk=int(x)).update(approved=True)
+
+            messages.success(request, ("Event List Approval Has Been Updated!"))
+            return redirect('admin-approval')
+
+        else:
+            return render(request, 'firstapp/adminapproval.html', {'event_list': event_list, 'venue_list': venue_list, 'event_count': event_count, 'venue_count': venue_count, 'user_count': user_count})
+
+    else:
+        messages.success(request, ("You Aren't Authorized to View This Page!"))
+        return redirect('index')
+
+    return render(request, 'firstapp/adminapproval.html', {'event_list': event_list})
+
 # Create your views here.
 def all_events(request):
-    event_list = Event.objects.all().order_by('name')
-    return render(request, 'firstapp/eventslist.html', {'event_list': event_list})
+    event_list = Event.objects.all().order_by('-event_date')
+
+    p = Paginator(Event.objects.all().order_by('-event_date'), 2)
+    page = request.GET.get('page')
+    events = p.get_page(page)
+    nums = "a" * events.paginator.num_pages
+
+    return render(request, 'firstapp/eventslist.html', {'event_list': event_list, 'events': events, 'nums': nums})
 
 def list_venues(request):
     venue_list = Venue.objects.all().order_by('name')
-    return render(request, 'firstapp/venues.html', {'venue_list': venue_list})
+
+    p = Paginator(Venue.objects.all().order_by('name'), 2)
+    page = request.GET.get('page')
+    venues = p.get_page(page)
+    nums = "a" * venues.paginator.num_pages
+
+    return render(request, 'firstapp/venues.html', {'venue_list': venue_list, 'venues': venues, 'nums': nums})
 
 def show_venue(request, venue_id):
     venue = Venue.objects.get(pk=venue_id)
+    events = venue.event_set.all()
     venue_owner = User.objects.get(pk=venue.owner)
-    return render(request, 'firstapp/venuedetails.html', {'venue': venue, 'venue_owner': venue_owner})
+    return render(request, 'firstapp/venuedetails.html', {'venue': venue, 'events': events, 'venue_owner': venue_owner})
 
 def add_venue(request):
     submitted = False
@@ -154,7 +199,7 @@ def add_event(request):
             form = EventFormAdmin(request.POST)
             if form.is_valid():
                 form.save()
-                return HttpResponseRedirect('/firstapp/add_event?submitted=True')
+                return HttpResponseRedirect('/add_event?submitted=True')
         else:
             form = EventForm(request.POST)
             if form.is_valid():

@@ -7,10 +7,11 @@
 
     {% load static %}
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.9.1/font/bootstrap-icons.css" integrity="sha384-xeJqLiuOvjUBq3iGOjvSQSIlwrpqjSHXpduPd6rQpuiM3f5/ijby8pCsnbu5S81n" crossorigin="anonymous">
-    <link rel="stylesheet" href="{% static 'css/style.css' %}" > 
     <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}" > 
+    <link rel="stylesheet" href="{% static 'css/style.css' %}" > 
     <script src="{% static 'js/jquery.js' %}"></script> 
     <script src="{% static 'js/bootstrap.min.js' %}"></script>
+    <title>Eventsbrits</title>
     
     {% block title %}{% endblock %}
 
@@ -22,7 +23,7 @@
         <nav class="navbar navbar-expand-md">
           <div class="container-fluid">
 
-            <a class="navbar-brand" href="{% url 'events' %}"> EVENTS </a>
+            <a class="navbar-brand" style="color: white;" href="{% url 'events' %}"> EVENTSBRITS </a>
 
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
               <span class="navbar-toggler-icon"></span>
@@ -33,24 +34,24 @@
               <ul class="navbar-nav me-auto mb-2 mb-md-0">
 
                 <li class="nav-item">
-                  <a class="nav-link" aria-current="page" href="{% url 'index' %}">Calendar</a>
+                  <a class="nav-link" style="color: white;" aria-current="page" href="{% url 'index' %}">Calendar</a>
                 </li>
                 
                 <li class="nav-item dropdown">
 
-                  <a class="nav-link dropdown-toggle" href="#" id="navbardropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">Events</a>
+                  <a class="nav-link dropdown-toggle" style="color: white;" href="#" id="navbardropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">Events</a>
 
-                  <ul class="dropdown-menu" aria-labelledby="navbardropdown">
+                  <ul class="dropdown-menu" style="background-color: #504c8d;" aria-labelledby="navbardropdown">
 
-                    <li><a class="dropdown-item" aria-current="page" href="{% url 'events' %}">All Events</a></li>
+                    <li><a class="dropdown-item" style="color: white;" aria-current="page" href="{% url 'events' %}">All Events</a></li>
 
-                    <li><a class="dropdown-item" aria-current="page" href="{% url 'search-events' %}">Search Events</a></li>
+                    <li><a class="dropdown-item" style="color: white;" aria-current="page" href="{% url 'search-events' %}">Search Events</a></li>
 
                     {% if user.is_authenticated %}
 
-                      <li><a class="dropdown-item" aria-current="page" href="{% url 'add-event' %}">Add Event</a></li>
+                      <li><a class="dropdown-item" style="color: white;" aria-current="page" href="{% url 'add-event' %}">Add Event</a></li>
 
-                      <li><a class="dropdown-item" aria-current="page" href="{% url 'my-events' %}">My Events</a></li>
+                      <li><a class="dropdown-item" style="color: white;" aria-current="page" href="{% url 'my-events' %}">My Events</a></li>
 
                     {% endif %}
 
@@ -60,15 +61,15 @@
 
                 <li class="nav-item dropdown">
 
-                  <a class="nav-link dropdown-toggle" href="#" id="navbardropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">Venues</a>
+                  <a class="nav-link dropdown-toggle" style="color: white;" href="#" id="navbardropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">Venues</a>
 
-                  <ul class="dropdown-menu" aria-labelledby="navbardropdown">
+                  <ul class="dropdown-menu" style="background-color: #504c8d;" aria-labelledby="navbardropdown">
 
-                    <li><a class="dropdown-item" aria-current="page" href="{% url 'list-venues' %}">All Venues</a></li>
+                    <li><a class="dropdown-item" style="color: white;" aria-current="page" href="{% url 'list-venues' %}">All Venues</a></li>
 
                     {% if user.is_authenticated %}
 
-                      <li><a class="dropdown-item" aria-current="page" href="{% url 'add-venue' %}">Add Venue</a></li>
+                      <li><a class="dropdown-item" style="color: white;" aria-current="page" href="{% url 'add-venue' %}">Add Venue</a></li>
 
                     {% endif %}
 
@@ -78,15 +79,15 @@
                 
                 <li class="nav-item dropdown">
 
-                  <a class="nav-link dropdown-toggle" href="#" id="navbardropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">Downloads</a>
+                  <a class="nav-link dropdown-toggle" style="color: white;" href="#" id="navbardropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">Downloads</a>
 
-                  <ul class="dropdown-menu" aria-labelledby="navbardropdown">
+                  <ul class="dropdown-menu" style="background-color: #504c8d;" aria-labelledby="navbardropdown">
 
-                    <li><a class="dropdown-item" href="{% url 'venue-text' %}"> Venue Text File </a></li>
+                    <li><a class="dropdown-item" style="color: white;" href="{% url 'venue-text' %}"> Venue Text File </a></li>
 
-                    <li><a class="dropdown-item" href="{% url 'venue-csv' %}"> Venue CSV File </a></li>
+                    <li><a class="dropdown-item" style="color: white;" href="{% url 'venue-csv' %}"> Venue CSV File </a></li>
 
-                    <li><a class="dropdown-item" href="{% url 'venue-pdf' %}"> Venue PDF File </a></li>
+                    <li><a class="dropdown-item" style="color: white;" href="{% url 'venue-pdf' %}"> Venue PDF File </a></li>
 
                   </ul>
 
@@ -96,20 +97,28 @@
 
               <ul class="navbar-nav  navbar-right">
 
+                {% if user.is_superuser %}
+
+                  <li class="nav-item"> 
+                    <a class="nav-link" style="color: white;" aria-current="page" href="{% url 'admin-approval' %}">Admin</a>
+                  </li>
+
+                {% endif %}
+
                 {% if user.is_authenticated %}
 
-                    <li class="nav-item">
-                      <a class="nav-link" aria-current="page" href="{% url 'logout' %}">Logout</a>
+                    <li class="nav-item"> 
+                      <a class="nav-link" style="color: white;" aria-current="page" href="{% url 'logout' %}">Logout</a>
                     </li>
 
                 {% else %}
 
                     <li class="nav-item">
-                      <a class="nav-link" aria-current="page" href="{% url 'register' %}">Register</a>
+                      <a class="nav-link" style="color: white;" aria-current="page" href="{% url 'register' %}">Register</a>
                     </li>
 
                     <li class="nav-item">
-                      <a class="nav-link" aria-current="page" href="{% url 'login' %}">Login</a>
+                      <a class="nav-link" style="color: white;" aria-current="page" href="{% url 'login' %}">Login</a>
                     </li>
 
                 {% endif %}
@@ -119,7 +128,7 @@
               <form class="d-flex" method="POST" action="{% url 'search-venues' %}">
                 {% csrf_token %}
 
-                <input class="form-control me-2" type="search" placeholder="Search venues..." aria-label="Search" name="searched" />
+                <input class="form-control me-2" type="search" style="background-color: transparent;" placeholder="Search venues..." aria-label="Search" name="searched" />
                 <button class="btn btn-outline-secondary" type="submit">Search</button>
               </form>
 
