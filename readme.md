@@ -1,6 +1,6 @@
 # Eventsbrits
 
-full stack CRUD blog website built with HTML, CSS, Bootstrap, and Django framework. <br />
+full stack CRUD website built with HTML, CSS, Bootstrap, and Django framework. <br />
 ![CSS3](https://img.shields.io/badge/css3-%231572B6.svg?style=for-the-badge&logo=css3&logoColor=white)
 ![HTML5](https://img.shields.io/badge/html5-%23E34F26.svg?style=for-the-badge&logo=html5&logoColor=white)
 ![Bootstrap](https://img.shields.io/badge/bootstrap-%231572B6.svg?style=for-the-badge&logo=bootstrap&logoColor=white&style=plastic)
